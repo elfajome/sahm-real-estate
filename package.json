@@ -1,6 +1,5 @@
 {
   "name": "sahm-real-estate",
-  "homepage": "https://elfajome.github.io/sahm-real-estate/",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -10,9 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
