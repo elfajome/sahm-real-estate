@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/assets/banner.png" alt="Sahm Real Estate Platform Banner">
+  <img width="1774" height="887" alt="Banner" src="https://github.com/user-attachments/assets/3f12eeff-f24c-4f58-85c0-92f995c68f35" />
 </p>
 
 ---
@@ -50,7 +50,8 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Home
 
 <p align="center">
-<img src="" width="100%">
+<img width="1672" height="941" alt="home" src="https://github.com/user-attachments/assets/e5867a37-eb5c-4e87-b624-41a7e8f4cd3c" />
+
 </p>
 
 ---
@@ -58,7 +59,7 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Property Listings
 
 <p align="center">
-<img src="" width="100%">
+<img width="1536" height="1024" alt="real-estate" src="https://github.com/user-attachments/assets/15265e3e-a184-413c-aa9d-4d91d4d51641" />
 </p>
 
 ---
@@ -66,7 +67,7 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Property Details
 
 <p align="center">
-<img src="" width="100%">
+<img width="1536" height="1024" alt="details-real-estate" src="https://github.com/user-attachments/assets/f37576bd-92a7-44d5-90c2-12805a530496" />
 </p>
 
 ---
@@ -74,7 +75,7 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Dashboard
 
 <p align="center">
-<img src="" width="100%">
+<img width="1536" height="1024" alt="dashboard" src="https://github.com/user-attachments/assets/9ee8bc8b-6e90-4acb-ba43-24327325e088" />
 </p>
 
 ---
@@ -82,7 +83,7 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Add Property
 
 <p align="center">
-<img src="" width="100%">
+<img width="1536" height="1024" alt="create-real-estates" src="https://github.com/user-attachments/assets/f17d0ca3-7e1a-4719-b0cb-6e7bddef07a8" />
 </p>
 
 ---
@@ -90,7 +91,7 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 ## Add Construction Request
 
 <p align="center">
-<img src="" width="100%">
+<img width="1535" height="1024" alt="add-construction" src="https://github.com/user-attachments/assets/03339495-c282-4837-8550-f0b43d7c8345" />
 </p>
 
 ---
