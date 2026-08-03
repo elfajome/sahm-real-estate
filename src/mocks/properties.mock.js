@@ -46,7 +46,7 @@ export const mockProperties = [
     description: 'Compact fully furnished studio near the business district — an ideal first rental.',
     price: 4500,
     image: img(1),
-    images: [{ url: img(1) }, { url: img('1b') }],
+    images: [{ id: 1, url: img(1) }, { id: 2, url: img('1b') }],
     area: area(1),
     aqar_type: type(1),
     aqar_status: status(2),
@@ -71,7 +71,7 @@ export const mockProperties = [
     description: 'Prestigious 5-bedroom villa with landscaped garden, pool and double garage.',
     price: 525000,
     image: img(2),
-    images: [{ url: img(2) }, { url: img('2b') }],
+    images: [{ id: 3, url: img(2) }, { id: 4, url: img('2b') }],
     area: area(2),
     aqar_type: type(2),
     aqar_status: status(1),
@@ -99,7 +99,7 @@ export const mockProperties = [
     description: 'Flat 900 m² residential plot ready to build, close to schools and services.',
     price: 95000,
     image: img(3),
-    images: [{ url: img(3) }],
+    images: [{ id: 5, url: img(3) }],
     area: area(1),
     aqar_type: type(5),
     aqar_status: status(1),
@@ -123,7 +123,7 @@ export const mockProperties = [
     description: 'Bright open-plan office with meeting rooms in a serviced tower.',
     price: 28000,
     image: img(4),
-    images: [{ url: img(4) }],
+    images: [{ id: 6, url: img(4) }],
     area: area(1),
     aqar_type: type(6),
     aqar_status: status(2),
@@ -149,7 +149,7 @@ export const mockProperties = [
     price: 18500,
     old_price: 22000,
     image: img(5),
-    images: [{ url: img(5) }],
+    images: [{ id: 7, url: img(5) }],
     area: area(2),
     aqar_type: type(6),
     aqar_status: status(2),
@@ -173,7 +173,7 @@ export const mockProperties = [
     description: 'Company construction project: 20-unit residential tower, delivery in 18 months.',
     price: 480000,
     image: img(6),
-    images: [{ url: img(6) }, { url: img('6b') }],
+    images: [{ id: 8, url: img(6) }, { id: 9, url: img('6b') }],
     area: area(1),
     aqar_type: type(3),
     aqar_status: status(3),
@@ -197,7 +197,7 @@ export const mockProperties = [
     description: 'Recently added, fully furnished 2-bedroom apartment with sea breeze balcony.',
     price: 9800,
     image: img(7),
-    images: [{ url: img(7) }],
+    images: [{ id: 10, url: img(7) }],
     area: area(2),
     aqar_type: type(1),
     aqar_status: status(2),
@@ -222,7 +222,7 @@ export const mockProperties = [
     description: 'Pinned listing: 4-bedroom family villa with mature garden and covered garage.',
     price: 310000,
     image: img(8),
-    images: [{ url: img(8) }],
+    images: [{ id: 11, url: img(8) }],
     area: area(1),
     aqar_type: type(2),
     aqar_status: status(1),
@@ -248,7 +248,7 @@ export const mockProperties = [
     description: 'Budget-friendly 1-bedroom apartment — a smart entry purchase.',
     price: 42000,
     image: img(9),
-    images: [{ url: img(9) }],
+    images: [{ id: 12, url: img(9) }],
     area: area(1),
     aqar_type: type(1),
     aqar_status: status(1),
@@ -272,7 +272,7 @@ export const mockProperties = [
     description: 'Top-floor luxury penthouse with private pool access and full furnishing.',
     price: 545000,
     image: img(10),
-    images: [{ url: img(10) }, { url: img('10b') }],
+    images: [{ id: 13, url: img(10) }, { id: 14, url: img('10b') }],
     area: area(2),
     aqar_type: type(1),
     aqar_status: status(1),
@@ -297,7 +297,7 @@ export const mockProperties = [
     description: 'Strategic 2,500 m² commercial plot with main-road frontage.',
     price: 220000,
     image: img(11),
-    images: [{ url: img(11) }],
+    images: [{ id: 15, url: img(11) }],
     area: area(1),
     aqar_type: type(5),
     aqar_status: status(1),
@@ -321,7 +321,7 @@ export const mockProperties = [
     description: 'Income-generating residential building, fully leased, with elevator and parking.',
     price: 498000,
     image: img(12),
-    images: [{ url: img(12) }],
+    images: [{ id: 16, url: img(12) }],
     area: area(2),
     aqar_type: type(3),
     aqar_status: status(1),
@@ -346,7 +346,7 @@ export const mockProperties = [
     price: 130000,
     old_price: 150000,
     image: img(13),
-    images: [{ url: img(13) }],
+    images: [{ id: 17, url: img(13) }],
     area: area(1),
     aqar_type: type(1),
     aqar_status: status(3),
@@ -370,7 +370,7 @@ export const mockProperties = [
     description: 'Small ready-to-operate shop unit inside a busy mall.',
     price: 75000,
     image: img(14),
-    images: [{ url: img(14) }],
+    images: [{ id: 18, url: img(14) }],
     area: area(2),
     aqar_type: type(6),
     aqar_status: status(1),
@@ -394,7 +394,7 @@ export const mockProperties = [
     description: '5-bedroom villa under construction with garden and garage, mountain views.',
     price: 265000,
     image: img(15),
-    images: [{ url: img(15) }],
+    images: [{ id: 19, url: img(15) }],
     area: area(2),
     aqar_type: type(2),
     aqar_status: status(3),
@@ -418,7 +418,7 @@ export const mockProperties = [
     description: 'Whole executive floor with 5 offices, parking and central AC.',
     price: 160000,
     image: img(16),
-    images: [{ url: img(16) }],
+    images: [{ id: 20, url: img(16) }],
     area: area(2),
     aqar_type: type(6),
     aqar_status: status(1),
@@ -442,7 +442,7 @@ export const mockProperties = [
     description: 'Very affordable 2-bedroom apartment close to the city center.',
     price: 6200,
     image: img(17),
-    images: [{ url: img(17) }],
+    images: [{ id: 21, url: img(17) }],
     area: area(1),
     aqar_type: type(1),
     aqar_status: status(2),
@@ -466,7 +466,7 @@ export const mockProperties = [
     description: 'Large 5,000 m² agricultural plot with water access, long-term lease.',
     price: 15000,
     image: img(18),
-    images: [{ url: img(18) }],
+    images: [{ id: 22, url: img(18) }],
     area: area(1),
     aqar_type: type(5),
     aqar_status: status(2),
@@ -515,6 +515,11 @@ const toggleStoredId = (key, postId) => {
 }
 
 const today = () => new Date().toISOString().slice(0, 10)
+
+// Ids for images created at runtime (store/update aqar) — never collides with
+// the 23 static ids seeded above.
+let runtimeImageId = 1000
+const nextImageId = () => ++runtimeImageId
 
 /**
  * Same method names / return shapes as `listingsService` (src/services/listings.service.js).
@@ -591,7 +596,7 @@ export const mockListingsService = {
       // Uploaded File objects cannot be persisted — a placeholder image keeps
       // the cards rendering correctly.
       image: img(`user-${id}`),
-      images: [{ url: img(`user-${id}`) }],
+      images: [{ id: nextImageId(), url: img(`user-${id}`) }],
       area: area(Number(fields.area_id)) ?? areas[0],
       aqar_type: type(Number(fields.aqar_type)) ?? propertyTypes[0],
       aqar_status: status(Number(fields.type_id)) ?? propertyStatuses[0],
@@ -640,6 +645,17 @@ export const mockListingsService = {
       floor: fields.floor != null ? Number(fields.floor) : current.floor,
       space: fields.space != null ? Number(fields.space) : current.space,
       pin: fields.pin != null ? Number(fields.pin) : current.pin,
+      // New File uploads can't be persisted as real URLs in localStorage —
+      // appended as placeholder images, same convention as storeAqar.
+      images: fields.images?.length
+        ? [
+            ...(current.images ?? []),
+            ...fields.images.map(() => {
+              const newId = nextImageId()
+              return { id: newId, url: img(`user-${fields.post_id}-${newId}`) }
+            }),
+          ]
+        : (current.images ?? []),
     }
     writeStore('user_aqars', list)
     return Promise.resolve(list[index])
@@ -651,6 +667,30 @@ export const mockListingsService = {
     if (next.length === list.length)
       return Promise.reject(new ApiError(404, 'Property not found'))
     writeStore('user_aqars', next)
+    return Promise.resolve({ success: true })
+  },
+
+  // Mirrors the real `owner/:id` endpoint — looks up a listing owner by id
+  // from the shared owners map (or any property carrying that user).
+  getOwner: (id) => {
+    const owner =
+      Object.values(mockPropertyOwners).find((o) => String(o.id) === String(id)) ??
+      getAllMockProperties().find((p) => String(p.user?.id) === String(id))?.user
+    if (!owner) return Promise.reject(new ApiError(404, 'Owner not found'))
+    return Promise.resolve(owner)
+  },
+
+  // Mirrors the real `delete_image` endpoint — only user-created listings are
+  // mutable in the mock store (the static catalog isn't ownable/editable).
+  deleteImage: (postId, imageId) => {
+    const list = readStore('user_aqars')
+    const index = list.findIndex((p) => String(p.id) === String(postId))
+    if (index === -1) return Promise.reject(new ApiError(404, 'Property not found'))
+    list[index] = {
+      ...list[index],
+      images: (list[index].images ?? []).filter((i) => String(i.id) !== String(imageId)),
+    }
+    writeStore('user_aqars', list)
     return Promise.resolve({ success: true })
   },
 

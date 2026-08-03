@@ -29,4 +29,14 @@ export const mockContentService = {
     writeStore('newsletter', list)
     return Promise.resolve({ success: true })
   },
+
+  // Not wired to any page (ADR decisions.md D-03) — stub only for façade parity.
+  getSetting: () => Promise.resolve({}),
+
+  // FAQ source is still open (ADR decisions.md OPEN-01) — FaqPage keeps using
+  // static content; this stub exists only for façade parity.
+  getFaq: () => Promise.resolve([]),
+
+  // No onboarding screens in this web app — stub only for façade parity.
+  getBoarding: () => Promise.resolve([]),
 }

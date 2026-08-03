@@ -12,8 +12,18 @@ import { cn } from '@/utils/cn.js'
  * - Only image files are accepted (`accept` + type filter).
  * - The parent owns the `File[]` state, so the payload stays compatible with
  *   the Postman `store/aqar` `images[]` formdata contract (buildFormData).
+ * - In edit mode, `existingImages` ({ id, url }[]) renders the images already
+ *   stored on the backend. Removing one calls `onRemoveExisting(id)`
+ *   immediately (real DELETE `delete_image` call) instead of waiting for the
+ *   form submit — the backend contract removes it right away.
  */
-export function ImageUploadField({ images, onChange, error }) {
+export function ImageUploadField({
+  images,
+  onChange,
+  error,
+  existingImages = [],
+  onRemoveExisting,
+}) {
   const { t } = useLocale()
   const inputRef = useRef(null)
 
@@ -45,6 +55,26 @@ export function ImageUploadField({ images, onChange, error }) {
 
   return (
     <div className="space-y-4">
+      {existingImages.length > 0 && (
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          {existingImages.map((existing) => (
+            <li
+              key={`existing-${existing.id}`}
+              className="relative overflow-hidden rounded-lg border border-border"
+            >
+              <img src={existing.url} alt="" className="aspect-square w-full object-cover" />
+              <button
+                type="button"
+                onClick={() => onRemoveExisting?.(existing.id)}
+                aria-label={t('profile.removeExistingImage')}
+                className="absolute end-2 top-2 rounded-full bg-white/90 p-1.5 text-text shadow transition hover:bg-red-600 hover:text-white"
+              >
+                <IconClose className="h-4 w-4" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
       <button
         type="button"
         onClick={() => inputRef.current?.click()}

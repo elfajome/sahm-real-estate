@@ -103,6 +103,10 @@ const writeOverride = (userId, patch) => {
 
 const withOverrides = (user) => ({ ...user, ...readOverrides()[user.id] })
 
+// A changed password lives in the same overrides store, keyed by user id —
+// never mutates the DEMO_ACCOUNTS/registeredAccounts password directly.
+const activePassword = (account) => readOverrides()[account.user.id]?.password ?? account.password
+
 /**
  * Current logged-in mock user (with profile overrides) or null — shared with
  * the other mock services (comment author, created listings owner, …).
@@ -120,7 +124,7 @@ export const mockAuthService = {
     const account = allAccounts().find(
       (a) =>
         a.user.email.toLowerCase() === String(email ?? '').toLowerCase().trim() &&
-        a.password === password,
+        activePassword(a) === password,
     )
     if (!account) return Promise.reject(new ApiError(401, 'Invalid email or password'))
     return Promise.resolve({
@@ -165,4 +169,29 @@ export const mockAuthService = {
     if (fields.email) patch.email = fields.email
     return Promise.resolve({ ...account.user, ...writeOverride(account.user.id, patch) })
   },
+
+  // Mirrors the real `change/password` contract: verifies `current_password`
+  // against the active (possibly already-overridden) password.
+  changePassword: ({ current_password, password, password_confirmation } = {}) => {
+    const account = currentAccount()
+    if (!account) return Promise.reject(new ApiError(401, 'Unauthenticated'))
+    if (current_password !== activePassword(account)) {
+      return Promise.reject(
+        new ApiError(422, 'Current password is incorrect', { current_password: ['invalid'] }),
+      )
+    }
+    if (!password || password !== password_confirmation) {
+      return Promise.reject(
+        new ApiError(422, 'Password confirmation does not match', {
+          password_confirmation: ['mismatch'],
+        }),
+      )
+    }
+    writeOverride(account.user.id, { password })
+    return Promise.resolve({ success: true })
+  },
+
+  // No dedicated preference storage in the mock — resolves like the real
+  // `is_notify` endpoint (fire-and-forget, no meaningful response body).
+  setNotify: () => Promise.resolve({ success: true }),
 }

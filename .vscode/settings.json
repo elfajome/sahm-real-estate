@@ -14,5 +14,6 @@
         "خدماتنا",
         "سياسة",
         "معنا"
-    ]
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

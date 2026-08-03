@@ -33,7 +33,7 @@ Locked product and technical choices for Sahm Real Estate Frontend.
 | L-12 | Invoice detail | **Inline expand** on `/profile/invoices` — no modal/route |
 | L-13 | Mobile search drawer | **Tablet + Mobile only** — hidden on desktop |
 | L-14 | Forgot password | **Deferred** — link is placeholder, no page/API |
-| L-15 | Register phone field | UI shown — **not sent to API** until backend adds field |
+| L-15 | Register phone field | UI shown — **not sent to API** until backend adds field. Enforced in code (2026-08-03): `auth.service.js` allowlists `register()` to the exact Postman fields, so `phone` can never leak through even if a caller adds it |
 | L-16 | Areas dropdown | Dynamic from `GET /areas` — never hardcoded |
 | L-17 | Listings filter sidebar RTL | Filters on **right** in RTL, **left** in LTR |
 | L-18 | Profile sidebar | 7 items + logout; active = gray bg + blue end border |
@@ -46,6 +46,8 @@ Locked product and technical choices for Sahm Real Estate Frontend.
 | L-25 | Add property form scope | **UI design fields only** + backend-required hidden defaults where necessary |
 | L-26 | Currency | **`$`** — same as mockups |
 | L-27 | Google Maps | **No key yet** — `VITE_GOOGLE_MAPS_API_KEY` in `.env`; enable picker/embed when provided |
+| L-28 | Change password | Separate **`PUT /change/password`** call (current + new + confirmation) — never bundled into `update/profile`, which has no password fields in the Postman contract |
+| L-29 | Edit property images | Existing images render with an individual remove action that calls **`DELETE /delete_image`** immediately (not deferred to form submit); newly selected files upload with `update/aqar` as before |
 
 ---
 
@@ -83,7 +85,7 @@ Locked product and technical choices for Sahm Real Estate Frontend.
 | D-14 | Maps without API key | Address text field only; skip lat/lng or send `0` defaults |
 | D-15 | Default locale | **`ar`** |
 | D-16 | `Lang` header | On every API request from active locale |
-| D-17 | Notifications + Chat | Disabled UI until wired |
+| D-17 | Notifications + Chat | ~~Disabled UI until wired~~ — **superseded**: both are fully built and wired to `inboxService` (`NotificationsPage`, `MessagesPage`), backed by a persisted mock chat that mirrors the Postman `chat`/`notifications` endpoints one-for-one |
 | D-18 | Navbar "إضافة عقار" | Guest → login → `/real-estates/create` |
 | D-19 | Login token field | Assume response field `token` or `access_token` — verify on first integration (OPEN-02) |
 
@@ -122,3 +124,4 @@ Locked product and technical choices for Sahm Real Estate Frontend.
 | 2026-07-14 | Initial ADR |
 | 2026-07-14 | Product owner locked O-01–O-08; unified top bar; static legal/help; localStorage JWT; postponed public constructions |
 | 2026-07-15 | **Architecture changed:** Feature-Driven Monolith → **Layer-Based** (`pages / components / services / store / hooks / utils`). See [overview.md](./overview.md) and [folder-structure.md](./folder-structure.md) |
+| 2026-08-03 | Full Postman verification pass (see [endpoint-map.md](../api/endpoint-map.md) "Verification log"). Fixed `delete/aqar` method mismatch, `update/profile` missing `_method=put`, `register` leaking `phone` (L-15 now code-enforced). Added L-28 (change password) and L-29 (edit-listing image removal). Corrected the stale D-17 note — Notifications/Chat are fully wired, not disabled |

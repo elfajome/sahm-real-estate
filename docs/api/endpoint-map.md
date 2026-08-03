@@ -13,13 +13,25 @@ Source: the backend API collection (maintained privately by the team — not com
 
 | Endpoint | Method | Body | Used in |
 |----------|--------|------|---------|
-| `register` | POST | formdata | RegisterPage |
+| `register` | POST | formdata — `name`, `email`, `type`, `area_id`, `password`, `password_confirmation`, `construction_type[0]` (conditional) | RegisterPage |
 | `login` | POST | `email`, `password` | LoginPage → returns JWT |
 | `logout` | POST | — | AuthenticatedTopBar |
 | `profile` | GET | — | ProfileInfoPage |
-| `update/profile` | POST | formdata + optional `image` | ProfileInfoPage |
+| `update/profile` | POST | formdata — `name`, `email`, `area_id`, `photo_profile` (file) + `_method=put` (Laravel method-spoofing) | ProfileInfoPage |
+| `change/password` | PUT | query string — `current_password`, `password`, `password_confirmation` | ProfileInfoPage (current-password field) |
+| `is_notify` | POST | `is_notify` (0/1) | Service available (`authService.setNotify`) — no toggle UI yet |
 | `user_types` | GET | — | RegisterForm |
 | `construction_types` | GET | — | RegisterForm, ConstructionForm |
+
+> **Register `phone` field:** collected in the UI (L-15) but never forwarded to
+> `register` — enforced by an explicit field allowlist in `auth.service.js`
+> (`REGISTER_FIELDS`), not just by convention, so a future caller mistake can't
+> leak it to the real backend.
+>
+> **`update/profile` never carries password fields.** `ProfileInfoPage` calls
+> `authService.changePassword()` separately when the user fills in a new
+> password; `updateProfile()` is allowlisted to `name`/`email`/`area_id`/`photo_profile`
+> only, matching the Postman `update_profile` sample exactly.
 
 ---
 
@@ -28,11 +40,13 @@ Source: the backend API collection (maintained privately by the team — not com
 | Endpoint | Method | Used in | Notes |
 |----------|--------|---------|-------|
 | `areas` | GET | Register, filters, forms | |
+| `area/:id` | GET | Service available (`lookupsService.getAreaChildren`) | **No hierarchy UI** — the 2-area demo dataset has no parent/child relation |
 | `about` | GET | Home, AboutPage | |
-| `common_question` | GET | **FAQ only if not static** — see OPEN-01 | |
+| `common_question` | GET | Service available (`contentService.getFaq`) — **FAQ stays static**, see OPEN-01 (still open) | |
 | `store-contact` | POST | ContactPage | |
 | `store-newsletter` | POST | Footer | |
-| `setting` | GET | — | **Not used for page content in v1** |
+| `setting` | GET | Service available (`contentService.getSetting`) | **Not used for page content in v1** (D-03, unchanged) |
+| `boarding` | GET | Service available (`contentService.getBoarding`) | No onboarding screens in this web app |
 
 ---
 
@@ -57,6 +71,7 @@ Source: the backend API collection (maintained privately by the team — not com
 | `aqar/:id` | GET | — | PropertyDetailPage |
 | `aqar_status` | GET | — | Services, FilterTabs |
 | `aqar_types` | GET | — | Filters, create form |
+| `owner/:id` | GET | Service available (`listingsService.getOwner`) — not called; the `aqar`/`aqars` payload already embeds the owner (`user`) object | |
 
 ### User aqars
 
@@ -65,7 +80,9 @@ Source: the backend API collection (maintained privately by the team — not com
 | `user/aqars` | GET | MyListingsPage |
 | `store/aqar` | POST | CreatePropertyPage |
 | `update/aqar` | POST | EditPropertyPage |
-| `delete/aqar` | POST | MyListingsPage |
+| `update/aqar` (images) | — | EditPropertyPage shows the listing's existing images and removes one via `delete_image` immediately on click; new files upload with the rest of `update/aqar` on submit |
+| `delete/aqar` | **DELETE** — `post_id` in the **query string** (verified against `resources/sahm.postman_collection.json`; previously mis-documented here as POST+body, code has been corrected to match) | MyListingsPage |
+| `delete_image` | **DELETE** — `post_id` + `image_id` in the query string | EditPropertyPage (remove existing image) |
 
 ### Actions
 
@@ -130,6 +147,21 @@ fields — revisit if the backend extends the contract.
 | `store/construction` | POST | CreateConstructionPage |
 | `constructions` | GET | **Deferred** — no public listing v1 |
 | `construction/:id` | GET | future |
+
+> **Company-side endpoints out of scope:** the Postman collection also
+> defines `update/construction`, `delete/construction`, `update/offer/status`,
+> `store/construction/offer` and `company/constructions`. This frontend has no
+> "company" role or dashboard (no such pages exist), so these are **not**
+> implemented — building them would be a separate, product-approved epic, not
+> a gap in the current user-side app.
+
+---
+
+## Verification log
+
+| Date | What was checked | Result |
+|------|-------------------|--------|
+| 2026-08-03 | Full diff of every real `*.service.js` against `resources/sahm.postman_collection.json` | Found and fixed: `delete/aqar` wrong method (POST+body → DELETE+query), `update/profile` missing `_method=put`, `register` sending an undocumented `phone` field (violated L-15). Added previously-missing endpoints: `change/password` (now wired into ProfileInfoPage), `delete_image` (now wired into EditPropertyPage's image manager), `is_notify`, `area/:id`, `owner/:id`, `setting`, `common_question`, `boarding` (added to the service façade; not wired to UI where no product decision authorizes it — see OPEN-01). Mocks were updated in lockstep so the demo experience is unaffected. |
 
 ---
 

@@ -296,6 +296,12 @@
     "emptyInvoices": "لا توجد فواتير.",
     "emptyNotifications": "لا توجد إشعارات حالياً.",
     "emptyMessages": "لا توجد رسائل حالياً.",
+    "currentPassword": "كلمة السر الحالية",
+    "passwordChanged": "تم تغيير كلمة السر بنجاح",
+    "passwordCurrentIncorrect": "كلمة السر الحالية غير صحيحة",
+    "passwordMismatch": "كلمة السر الجديدة غير متطابقة",
+    "removeExistingImage": "حذف الصورة",
+    "imageRemoved": "تم حذف الصورة",
     "invoice": {
       "property": "العقار",
       "price": "السعر",

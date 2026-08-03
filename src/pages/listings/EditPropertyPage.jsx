@@ -32,6 +32,8 @@ export default function EditPropertyPage() {
           hall_no: data.hall_no ?? '0',
           bathroom_no: data.bathroom_no ?? '0',
           garage_no: data.garage_no ?? '0',
+          street_no: data.street_no ?? '0',
+          nature_id: data.nature_id ?? '0',
           floor: data.floor ?? '0',
           space: data.space ?? '0',
           lat: data.lat ?? '0',
@@ -39,6 +41,7 @@ export default function EditPropertyPage() {
           offer: String(data.offer ?? '0'),
           user_pay_type: String(data.user_pay_type ?? '0'),
           post_id: id,
+          images: data.images ?? [],
         })
       } catch {
         setLoadError(true)

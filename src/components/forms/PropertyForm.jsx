@@ -10,10 +10,11 @@ import { ImageUploadField } from '@/components/forms/ImageUploadField.jsx'
 import { FieldRow, RadioPillGroup, SectionHeader } from '@/components/forms/FormSection.jsx'
 import { RealEstateConditionalFields } from '@/components/forms/RealEstateConditionalFields.jsx'
 import { useLocale } from '@/hooks/useLocale.js'
-import { lookupsService } from '@/services/index.js'
+import { lookupsService, listingsService } from '@/services/index.js'
 import { normalizeList } from '@/utils/normalizeList.js'
 import { lookupLabel } from '@/utils/lookupLabel.js'
 import { cn } from '@/utils/cn.js'
+import { useToast } from '@/components/ui/Toast.jsx'
 import {
   CONDITIONAL_FIELD_DEFAULTS,
   CONDITIONAL_FIELD_ORDER,
@@ -76,6 +77,7 @@ function buildPropertySchema(t, rules) {
 
 export function PropertyForm({ onSubmit, defaultValues = {}, submitLabel }) {
   const { t, locale } = useLocale()
+  const { showToast } = useToast()
   const isEdit = Boolean(defaultValues.post_id)
   const {
     register,
@@ -94,6 +96,7 @@ export function PropertyForm({ onSubmit, defaultValues = {}, submitLabel }) {
   const [natures, setNatures] = useState([])
   const [images, setImages] = useState([])
   const [imageError, setImageError] = useState('')
+  const [existingImages, setExistingImages] = useState(defaultValues.images ?? [])
 
   const lat = watch('lat')
   const lng = watch('lng')
@@ -137,6 +140,19 @@ export function PropertyForm({ onSubmit, defaultValues = {}, submitLabel }) {
   const handleImagesChange = (next) => {
     setImages(next)
     if (next.length) setImageError('')
+  }
+
+  // Removing an already-stored image is immediate (real DELETE `delete_image`
+  // call) — it does not wait for the form submit, matching the backend
+  // contract where the image is deleted from the listing right away.
+  const handleRemoveExistingImage = async (imageId) => {
+    try {
+      await listingsService.deleteImage(defaultValues.post_id, imageId)
+      setExistingImages((prev) => prev.filter((img) => img.id !== imageId))
+      showToast(t('profile.imageRemoved'))
+    } catch {
+      showToast(t('common.error'), 'error')
+    }
   }
 
   const handleFormSubmit = async (data) => {
@@ -271,7 +287,13 @@ export function PropertyForm({ onSubmit, defaultValues = {}, submitLabel }) {
       {/* ── Section 3 — Upload images (multiple) ──────────────────────── */}
       <section className="space-y-6">
         <SectionHeader required>{t('propertyForm.sectionUpload')}</SectionHeader>
-        <ImageUploadField images={images} onChange={handleImagesChange} error={imageError} />
+        <ImageUploadField
+          images={images}
+          onChange={handleImagesChange}
+          error={imageError}
+          existingImages={existingImages}
+          onRemoveExisting={handleRemoveExistingImage}
+        />
       </section>
 
       {/* ── Section 4 — Pinning ────────────────────────────────────── */}

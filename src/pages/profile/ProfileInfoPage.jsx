@@ -47,12 +47,29 @@ export default function ProfileInfoPage() {
   const onSubmit = async (data) => {
     setSubmitting(true)
     try {
-      const fields = { name: data.name, email: data.email }
+      // Password changes go through the dedicated `change/password` endpoint —
+      // `update/profile` never carries password fields (Postman contract).
       if (data.password) {
-        fields.password = data.password
-        fields.password_confirmation = data.password_confirmation
+        if (data.password !== data.password_confirmation) {
+          showToast(t('profile.passwordMismatch'), 'error')
+          setSubmitting(false)
+          return
+        }
+        try {
+          await authService.changePassword({
+            current_password: data.current_password,
+            password: data.password,
+            password_confirmation: data.password_confirmation,
+          })
+        } catch (err) {
+          showToast(err?.status === 422 ? t('profile.passwordCurrentIncorrect') : t('common.error'), 'error')
+          setSubmitting(false)
+          return
+        }
       }
-      if (avatarFile) fields.image = avatarFile
+
+      const fields = { name: data.name, email: data.email }
+      if (avatarFile) fields.photo_profile = avatarFile
       await authService.updateProfile(fields)
       showToast(t('profile.saved'))
     } catch {
@@ -88,10 +105,22 @@ export default function ProfileInfoPage() {
           <Input label={t('auth.name')} {...register('name')} />
           <Input label={t('auth.email')} type="email" {...register('email')} />
           <Input label={t('auth.phone')} disabled {...register('phone')} />
-          <Input label={t('auth.password')} type="password" {...register('password')} />
+          <Input
+            label={t('profile.currentPassword')}
+            type="password"
+            autoComplete="current-password"
+            {...register('current_password')}
+          />
+          <Input
+            label={t('auth.password')}
+            type="password"
+            autoComplete="new-password"
+            {...register('password')}
+          />
           <Input
             label={t('auth.passwordConfirm')}
             type="password"
+            autoComplete="new-password"
             {...register('password_confirmation')}
           />
         </div>

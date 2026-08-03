@@ -69,6 +69,9 @@ export const constructionTypes = [
 /** Same method names / return shapes as `lookupsService` (src/services/lookups.service.js). */
 export const mockLookupsService = {
   getAreas: () => Promise.resolve(areas),
+  // No area hierarchy modeled in the 2-area demo dataset (`areas` has no
+  // parent/child relation) — resolves empty, matching "no children" for both.
+  getAreaChildren: () => Promise.resolve([]),
   getAqarTypes: () => Promise.resolve(propertyTypes),
   getAqarStatuses: () => Promise.resolve(propertyStatuses),
   getAqarNatures: () => Promise.resolve(aqarNatures),

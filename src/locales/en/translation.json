@@ -284,6 +284,12 @@
     "emptyInvoices": "No invoices.",
     "emptyNotifications": "No notifications yet.",
     "emptyMessages": "No messages yet.",
+    "currentPassword": "Current password",
+    "passwordChanged": "Password changed successfully",
+    "passwordCurrentIncorrect": "Current password is incorrect",
+    "passwordMismatch": "New password confirmation does not match",
+    "removeExistingImage": "Remove image",
+    "imageRemoved": "Image removed",
     "invoice": {
       "property": "Property",
       "price": "Price",

@@ -19,7 +19,15 @@ export const listingsService = {
 
   updateAqar: (fields) => apiClient.postForm('update/aqar', buildFormData(fields)),
 
-  deleteAqar: (postId) => apiClient.postForm('delete/aqar', buildFormData({ post_id: postId })),
+  // Postman `delete_aqar`: DELETE method, `post_id` in the query string (NOT
+  // a POST form body — confirmed against resources/sahm.postman_collection.json).
+  deleteAqar: (postId) => apiClient.delete(withQuery('delete/aqar', { post_id: postId })),
 
   storeComment: (fields) => apiClient.postForm('store_comment', buildFormData(fields)),
+
+  getOwner: (id) => apiClient.get(`owner/${id}`),
+
+  // Postman `delete_image`: DELETE method, `post_id` + `image_id` in the query string.
+  deleteImage: (postId, imageId) =>
+    apiClient.delete(withQuery('delete_image', { post_id: postId, image_id: imageId })),
 }
