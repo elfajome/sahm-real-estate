@@ -30,13 +30,9 @@ A production-ready real estate marketplace built with React, Vite, and Tailwind 
 
 <br>
 
-### 🌐 Live Demo
+## Live Demo In Vercel
 
-> **Coming Soon**
-
-```
-[View Live Demo](https://your-vercel-link.vercel.app)
-```
+**Production URL:** [View Live Demo](https://your-vercel-link.vercel.app)
 
 </div>
 
